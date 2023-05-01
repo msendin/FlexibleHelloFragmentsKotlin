@@ -10,8 +10,6 @@ import java.util.Locale
 import java.util.Objects
 
 class ListFrag : ListFragment() {
-
-
     override fun onViewCreated(v: View, savedInstanceState: Bundle?) {
         super.onViewCreated(v, savedInstanceState)
         val values =
@@ -21,20 +19,17 @@ class ListFrag : ListFragment() {
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        val item = Objects.requireNonNull(
-            listAdapter
-        )?.getItem(position) as String
-        val frag =
-            requireActivity().supportFragmentManager.findFragmentById(R.id.frag_capt) as DetailFrag?
+        val item = Objects.requireNonNull(listAdapter)?.getItem(position) as String
+        val frag = requireActivity().supportFragmentManager.findFragmentById(R.id.frag_capt)
+                as DetailFrag?
         if (frag != null) {
-            frag.mostrarDetalle(getCapt(item))
+            frag.showText(getCapt(item))
         } else {
-            val i = Intent(activity, DetailActivity::class.java)
+            val i = Intent(requireActivity(), DetailActivity::class.java)
             i.putExtra("value", getCapt(item))
             startActivity(i)
         }
     }
-
     private fun getCapt(ship: String): String {
         if (ship.lowercase(Locale.getDefault()).contains("enterprise")) {
             return "Johnathan Archer"
